@@ -1,0 +1,13 @@
+digraph init {
+size="8,10";
+  GT [shape=box,style=dotted,label="init"];
+  GT -> S1;
+	S1 -> S8  [color=black,style=bold,label="(run sieve(root,n))"];
+	S8 -> S3  [color=black,style=solid,label="((n<25))"];
+	S8 -> S6  [color=black,style=solid,label="((n>=25))"];
+	S3 -> S4  [color=black,style=solid,label="n = (n+1)"];
+	S4 -> S8  [color=black,style=bold,label="root!number,n"];
+	S6 -> S11  [color=black,style=bold,label="root!eof,0"];
+	S11 -> S0  [color=black,style=solid,label="-end-"];
+  S11 [color=blue,style=bold,shape=box];
+}

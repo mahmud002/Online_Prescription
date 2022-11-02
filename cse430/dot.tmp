@@ -1,0 +1,36 @@
+digraph p_sieve {
+size="8,10";
+  GT [shape=box,style=dotted,label="sieve"];
+  GT -> S1;
+	S1 -> S17  [color=black,style=solid,label="printf('MSC: %d is prime ',prime)"];
+	S17 -> S13  [color=black,style=bold,label="c?number,n"];
+  S17 [color=blue,style=bold,shape=box];
+	S17 -> S23  [color=black,style=bold,label="c?eof,0"];
+  S17 [color=blue,style=bold,shape=box];
+	S13 -> S4  [color=black,style=solid,label="(((n%prime)==0))"];
+	S13 -> S11  [color=black,style=solid,label="else"];
+	S4 -> S17  [color=black,style=solid,label="printf('MSC: %d = %d*%d ',n,prime,(n/prime))"];
+	S11 -> S7  [color=black,style=solid,label="(!(haschild))"];
+	S11 -> S10  [color=black,style=solid,label="else"];
+	S7 -> S8  [color=black,style=solid,label="haschild = 1"];
+	S8 -> S17  [color=black,style=bold,label="(run sieve(child,n))"];
+	S10 -> S17  [color=black,style=bold,label="child!number,n"];
+	S23 -> S21  [color=black,style=solid,label="(haschild)"];
+	S23 -> S25  [color=black,style=solid,label="else"];
+	S21 -> S25  [color=black,style=bold,label="child!eof,0"];
+	S25 -> S0  [color=black,style=solid,label="-end-"];
+  S25 [color=blue,style=bold,shape=box];
+}
+digraph init {
+size="8,10";
+  GT [shape=box,style=dotted,label="init"];
+  GT -> S1;
+	S1 -> S8  [color=black,style=bold,label="(run sieve(root,n))"];
+	S8 -> S3  [color=black,style=solid,label="((n<25))"];
+	S8 -> S6  [color=black,style=solid,label="((n>=25))"];
+	S3 -> S4  [color=black,style=solid,label="n = (n+1)"];
+	S4 -> S8  [color=black,style=bold,label="root!number,n"];
+	S6 -> S11  [color=black,style=bold,label="root!eof,0"];
+	S11 -> S0  [color=black,style=solid,label="-end-"];
+  S11 [color=blue,style=bold,shape=box];
+}

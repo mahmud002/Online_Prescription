@@ -1,0 +1,16 @@
+User= (in_enter_product_page -> (out_load_product_page -> in_select_product -> out_display_info -> in_buy_product-> out_add_payment-> in_payment->out_payment_success->out_delivery_process->User|out_load_login_page->User)).
+
+
+Product= (out_enter_product_page -> in_check_authentication ->( out_authenticate ->in_load_product_page -> out_select_product -> in_display_info -> out_buy_product-> in_add_payment-> out_payment->in_payment_success->in_delivery_process->Product|out_not_authenticate->in_load_login_page->Product)).
+
+System_login= (out_check_authentication -> (in_authenticate -> System_login|in_not_authenticate->System_login)).
+
+||Buy_Product= (User || Product || System_login)
+
+                 /{in_enter_product_page/out_enter_product_page, out_load_product_page/ in_load_product_page, in_select_product/out_select_product, out_display_info/ in_display_info,
+				in_buy_product/out_buy_product, out_add_payment/in_add_payment, in_payment/ out_payment, out_payment_success/in_payment_success, out_delivery_process/in_delivery_process,
+				
+				in_check_authentication/out_check_authentication, out_authenticate/in_authenticate, out_load_login_page/in_load_login_page, out_not_authenticate/in_not_authenticate
+				
+					
+}.

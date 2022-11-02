@@ -1,0 +1,39 @@
+digraph p_User {
+size="8,10";
+  GT [shape=box,style=dotted,label="User"];
+  GT -> S1;
+	S1 -> S2  [color=black,style=bold,label="to_blog!enterBlog"];
+	S2 -> S3  [color=black,style=bold,label="to_user?loadBlogPage"];
+	S3 -> S4  [color=black,style=bold,label="to_blog!createNewBlog"];
+	S4 -> S5  [color=black,style=bold,label="to_user?blogForm"];
+	S5 -> S6  [color=black,style=bold,label="to_blog!newBlog"];
+	S6 -> S1  [color=black,style=bold,label="to_user?ack"];
+}
+digraph p_Blog {
+size="8,10";
+  GT [shape=box,style=dotted,label="Blog"];
+  GT -> S1;
+	S1 -> S2  [color=black,style=bold,label="to_blog?enterBlog"];
+	S2 -> S3  [color=black,style=bold,label="to_user!loadBlogPage"];
+	S3 -> S4  [color=black,style=bold,label="to_blog?createNewBlog"];
+	S4 -> S5  [color=black,style=bold,label="to_database!checkUserAuth"];
+	S5 -> S6  [color=black,style=bold,label="to_blog?authenticate"];
+	S6 -> S7  [color=black,style=bold,label="to_user!blogForm"];
+	S7 -> S8  [color=black,style=bold,label="to_blog?newBlog"];
+	S8 -> S9  [color=black,style=bold,label="to_database!checkPostValidation"];
+	S9 -> S10  [color=black,style=bold,label="to_blog?postVallied"];
+	S10 -> S11  [color=black,style=bold,label="to_database!saveInDB"];
+	S11 -> S12  [color=black,style=bold,label="to_blog?added"];
+	S12 -> S1  [color=black,style=bold,label="to_user!ack"];
+}
+digraph p_Database {
+size="8,10";
+  GT [shape=box,style=dotted,label="Database"];
+  GT -> S1;
+	S1 -> S2  [color=black,style=bold,label="to_database?checkUserAuth"];
+	S2 -> S3  [color=black,style=bold,label="to_blog!authenticate"];
+	S3 -> S4  [color=black,style=bold,label="to_database?checkPostValidation"];
+	S4 -> S5  [color=black,style=bold,label="to_blog!postVallied"];
+	S5 -> S6  [color=black,style=bold,label="to_database?saveInDB"];
+	S6 -> S1  [color=black,style=bold,label="to_blog!added"];
+}

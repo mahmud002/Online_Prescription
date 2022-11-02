@@ -1,0 +1,35 @@
+digraph p_User {
+size="8,10";
+  GT [shape=box,style=dotted,label="User"];
+  GT -> S1;
+	S1 -> S2  [color=black,style=bold,label="to_profile!enterProfile"];
+	S2 -> S3  [color=black,style=bold,label="to_user?loadProfile"];
+	S3 -> S4  [color=black,style=bold,label="to_profile!editProfile"];
+	S4 -> S5  [color=black,style=bold,label="to_user?returnForm"];
+	S5 -> S6  [color=black,style=bold,label="to_user!insertInfo"];
+	S6 -> S1  [color=black,style=bold,label="to_user?ack"];
+}
+digraph p_Profile {
+size="8,10";
+  GT [shape=box,style=dotted,label="Profile"];
+  GT -> S1;
+	S1 -> S2  [color=black,style=bold,label="to_profile?enterProfile"];
+	S2 -> S3  [color=black,style=bold,label="to_database!checkAuth"];
+	S3 -> S4  [color=black,style=bold,label="to_profile?authSuccess"];
+	S4 -> S5  [color=black,style=bold,label="to_user!loadProfile"];
+	S5 -> S6  [color=black,style=bold,label="to_profile?editProfile"];
+	S6 -> S7  [color=black,style=bold,label="to_user!returnForm"];
+	S7 -> S8  [color=black,style=bold,label="to_user?insertInfo"];
+	S8 -> S9  [color=black,style=bold,label="to_database!saveInfo"];
+	S9 -> S10  [color=black,style=bold,label="to_profile?updateSuccess"];
+	S10 -> S1  [color=black,style=bold,label="to_user!ack"];
+}
+digraph p_Database {
+size="8,10";
+  GT [shape=box,style=dotted,label="Database"];
+  GT -> S1;
+	S1 -> S2  [color=black,style=bold,label="to_database?checkAuth"];
+	S2 -> S3  [color=black,style=bold,label="to_profile!authSuccess"];
+	S3 -> S4  [color=black,style=bold,label="to_database?saveInfo"];
+	S4 -> S1  [color=black,style=bold,label="to_profile!updateSuccess"];
+}

@@ -1,0 +1,68 @@
+mtype = { update,loadPage,reqUp,proForm, addinfo, check, added, smsg, ack, ack0 };
+chan to_user = [6] of { mtype };
+chan to_profile = [6] of { mtype };
+active proctype User()
+{
+again: to_profile!update;
+	to_user?loadPage;
+
+ 	goto again
+}
+active proctype Profile()
+{
+again: to_profile?update;
+	to_user!loadPage;
+
+ 	goto again
+}
+
+
+
+mtype = { signuph, addinfo, check, added, smsg, ack, ack0 };
+chan to_user = [3] of { mtype };
+chan to_signup = [5] of { mtype };
+chan to_database = [3] of { mtype };
+active proctype User()
+{
+again: to_signup!signuph;
+ 	to_signup!addinfo;
+ 	to_user?ack;
+ 	to_signup!smsg;
+ 	goto again
+}
+active proctype Signup()
+{
+again: to_signup?signuph; 
+ 	to_signup?addinfo;
+ 	to_database!check;
+ 	to_signup?added;
+ 	to_user!ack;
+ 	to_signup?smsg;
+ 	goto again
+}
+active proctype Database()
+{
+again: to_database?check;
+ 	to_signup!added;
+ 	goto again
+}
+
+
+
+
+
+
+9		to_product!selectProduct;
+10		to_user?displayProductInfo;
+11		to_product!buyProduct;
+12		to_user?reqAddPatment;
+13		to_product!payment;
+14		to_user!paymentSuccess;
+
+
+to_product?selectProduct;
+24		to_user!displayProductInfo;
+25		to_product?buyProduct;
+26		to_user!reqAddPatment;
+27		to_product?payment;
+28		to_user!paymentSuccess;

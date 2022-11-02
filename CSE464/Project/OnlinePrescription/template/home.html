@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %} Home{% endblock title %} 
+{% block active%}active{% endblock active%}
+{% block body %}
+
+  <!-- Background image -->
+  <div
+          class="p-5 text-center bg-image"
+          style="
+          background-image: url('https://mybayutcdn.bayut.com/mybayut/wp-content/uploads/Online-pharmacies-in-Sharjah.jpg');
+          height: 400px;
+        "
+  >
+    <div class="mask" style="background-color: hsla(0, 0%, 0%, 0.308);">
+      <div class="d-flex justify-content-center align-items-center h-100">
+        <div class="text-white">
+            <p class="fs-1">Welcome to Onlinr Prescription System</p>
+       
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Background image -->
+<br>
+  <center>
+    <p class="fs-3">Who you are?</p>
+<button type="button"onclick="window.location.href='/plogin'" class="btn btn-success btn-lg">Patient</button>&nbsp;&nbsp;&nbsp;&nbsp;
+<button type="button"onclick="window.location.href='/dlogin'" class="btn btn-primary btn-lg">Doctor</button>
+
+</center>
+{% endblock body %}

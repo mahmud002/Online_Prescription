@@ -1,0 +1,18 @@
+User=(in_enter_profile-> (out_show_profile-> 				sent_req_edit_profile ->recv_form -> sent_write_all_info -> recv_conformation_message -> User| out_load_login_page->User)).
+
+
+Profile= (out_enter_profile-> in_check_authentication->(	out_authentication_checked->in_show_profile-> 		recv_edit_profile -> sent_form -> recv_write_all_info -> 		in_insert_info->out_update_info	->	  sent_conformation_message -> Profile | out_not_auth->in_load_login_page->Profile)).
+
+DB=(out_check_authentication->(in_authentication_checked-> out_insert_info-> in_update_info->DB | in_not_auth->DB)).
+
+
+||User_Profile_Database = ( User || Profile ||DB)/ 
+
+{in_enter_profile/out_enter_profile, sent_req_edit_profile/recv_edit_profile, recv_form/sent_form, sent_write_all_info/recv_write_all_info, recv_conformation_message/sent_conformation_message,
+out_show_profile/in_show_profile,
+
+
+in_check_authentication/out_check_authentication, out_authentication_checked/in_authentication_checked, in_insert_info/out_insert_info, out_update_info/in_update_info,
+out_load_login_page/in_load_login_page, in_not_auth/out_not_auth
+
+}.

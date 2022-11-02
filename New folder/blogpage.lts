@@ -1,0 +1,5 @@
+User= ( input_load_blog_page -> blogs -> create_blog -> insert_blog -> newblog -> blogs -> User ).
+
+Blog_page= (output_load_blog_page -> blogs -> create_blog -> insert_blog -> newblog -> checking_user_authentication ->user_valied ->check_post_validation -> post_valied -> load_blog_page -> blogs -> Blog_page).
+Authentication_server=(load_blog_page -> blogs -> create_blog -> insert_blog -> newblog -> checking_user_authentication ->user_valied ->check_post_validation -> post_valied  -> save_database -> data_saved -> load_blog_page -> blogs -> Authentication_server).
+Database_server=(load_blog_page -> blogs -> create_blog -> insert_blog -> newblog -> checking_user_authentication ->user_valied ->check_post_validation -> post_valied  -> save_database -> data_saved -> load_blog_page -> blogs -> Database_server).

@@ -1,0 +1,11 @@
+digraph p_Database {
+size="8,10";
+  GT [shape=box,style=dotted,label="Database"];
+  GT -> S1;
+	S1 -> S2  [color=black,style=bold,label="to_database?checkUserAuth"];
+	S2 -> S3  [color=black,style=bold,label="to_blog!authenticate"];
+	S3 -> S4  [color=black,style=bold,label="to_database?checkPostValidation"];
+	S4 -> S5  [color=black,style=bold,label="to_blog!postVallied"];
+	S5 -> S6  [color=black,style=bold,label="to_database?saveInDB"];
+	S6 -> S1  [color=black,style=bold,label="to_blog!added"];
+}

@@ -1,0 +1,41 @@
+digraph p_User {
+size="8,10";
+  GT [shape=box,style=dotted,label="User"];
+  GT -> S1;
+	S1 -> S2  [color=black,style=bold,label="to_product!enterProductPage"];
+	S2 -> S3  [color=black,style=bold,label="to_user?loadProductPage"];
+	S3 -> S4  [color=black,style=bold,label="to_product!selectProduct"];
+	S4 -> S5  [color=black,style=bold,label="to_user?displayProductInfo"];
+	S5 -> S6  [color=black,style=bold,label="to_product!buyProduct"];
+	S6 -> S7  [color=black,style=bold,label="to_user?reqAddPatment"];
+	S7 -> S8  [color=black,style=bold,label="to_product!payment"];
+	S8 -> S9  [color=black,style=bold,label="to_user?paymentSuccess"];
+	S9 -> S1  [color=black,style=bold,label="to_user?deliveryProcess"];
+}
+digraph p_Product {
+size="8,10";
+  GT [shape=box,style=dotted,label="Product"];
+  GT -> S1;
+	S1 -> S2  [color=black,style=bold,label="to_product?enterProductPage"];
+	S2 -> S3  [color=black,style=bold,label="to_database!checkUserAuth"];
+	S3 -> S4  [color=black,style=bold,label="to_product?authenticate"];
+	S4 -> S5  [color=black,style=bold,label="to_user!loadProductPage"];
+	S5 -> S6  [color=black,style=bold,label="to_product?selectProduct"];
+	S6 -> S7  [color=black,style=bold,label="to_user!displayProductInfo"];
+	S7 -> S8  [color=black,style=bold,label="to_product?buyProduct"];
+	S8 -> S9  [color=black,style=bold,label="to_user!reqAddPatment"];
+	S9 -> S10  [color=black,style=bold,label="to_product?payment"];
+	S10 -> S11  [color=black,style=bold,label="to_user!paymentSuccess"];
+	S11 -> S12  [color=black,style=bold,label="to_database!savePurchaseInfo"];
+	S12 -> S13  [color=black,style=bold,label="to_product?saveSuccess"];
+	S13 -> S1  [color=black,style=bold,label="to_user!deliveryProcess"];
+}
+digraph p_Database {
+size="8,10";
+  GT [shape=box,style=dotted,label="Database"];
+  GT -> S1;
+	S1 -> S2  [color=black,style=bold,label="to_database?checkUserAuth"];
+	S2 -> S3  [color=black,style=bold,label="to_product!authenticate"];
+	S3 -> S4  [color=black,style=bold,label="to_database?savePurchaseInfo"];
+	S4 -> S1  [color=black,style=bold,label="to_product!saveSuccess"];
+}

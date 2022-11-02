@@ -1,0 +1,27 @@
+digraph init {
+size="8,10";
+  GT [shape=box,style=dotted,label="init"];
+  GT -> S23;
+	S23 -> S2  [color=black,style=bold,label="((p1>0))"];
+	S23 -> S5  [color=black,style=bold,label="(((p2>0)&&(p4>0)))"];
+	S23 -> S9  [color=black,style=bold,label="((p3>0))"];
+	S23 -> S13  [color=black,style=bold,label="((p4>0))"];
+	S23 -> S16  [color=black,style=bold,label="(((p1>0)&&(p5>0)))"];
+	S23 -> S20  [color=black,style=bold,label="((p6>0))"];
+	S2 -> S3  [color=black,style=bold,label="p1 = (p1-1)"];
+	S3 -> S23  [color=black,style=bold,label="p2 = (p2+1)"];
+	S5 -> S6  [color=black,style=bold,label="p2 = (p2-1)"];
+	S6 -> S7  [color=black,style=bold,label="p4 = (p4-1)"];
+	S7 -> S23  [color=black,style=bold,label="p3 = (p3+1)"];
+	S9 -> S10  [color=black,style=bold,label="p3 = (p3-1)"];
+	S10 -> S11  [color=black,style=bold,label="p1 = (p1+1)"];
+	S11 -> S23  [color=black,style=bold,label="p4 = (p4+1)"];
+	S13 -> S14  [color=black,style=bold,label="p4 = (p4-1)"];
+	S14 -> S23  [color=black,style=bold,label="p5 = (p5+1)"];
+	S16 -> S17  [color=black,style=bold,label="p1 = (p1-1)"];
+	S17 -> S18  [color=black,style=bold,label="p5 = (p5-1)"];
+	S18 -> S23  [color=black,style=bold,label="p6 = (p6+1)"];
+	S20 -> S21  [color=black,style=bold,label="p6 = (p6-1)"];
+	S21 -> S22  [color=black,style=bold,label="p4 = (p4+1)"];
+	S22 -> S23  [color=black,style=bold,label="p1 = (p1+1)"];
+}

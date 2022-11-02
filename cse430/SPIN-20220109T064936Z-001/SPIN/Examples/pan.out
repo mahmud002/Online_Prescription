@@ -1,0 +1,47 @@
+verification result:
+spin -a  abp.pml
+gcc -DMEMLIM=1024 -O2 -DXUSAFE -DSAFETY -DNOCLAIM -w -o pan pan.c
+./pan -m10000 
+Pid: 10704
+
+(Spin Version 6.5.1 -- 20 December 2019)
+	+ Partial Order Reduction
+
+Full statespace search for:
+	never claim         	- (not selected)
+	assertion violations	+
+	cycle checks       	- (disabled by -DSAFETY)
+	invalid end states	+
+
+State-vector 24 byte, depth reached 9, errors: 0
+       12 states, stored
+        3 states, matched
+       15 transitions (= stored+matched)
+        0 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.001	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.285	actual memory usage for states
+  128.000	memory used for hash table (-w24)
+    0.534	memory used for DFS stack (-m10000)
+  128.730	total actual memory usage
+
+
+unreached in proctype Sender
+	abp.pml:39, state 28, "-end-"
+	(1 of 28 states)
+unreached in proctype Receiver
+	abp.pml:29, state 5, "sender!2"
+	abp.pml:28, state 6, "receiver?3"
+	abp.pml:28, state 6, "receiver?4"
+	abp.pml:29, state 14, "sender!1"
+	abp.pml:28, state 15, "receiver?4"
+	abp.pml:28, state 15, "receiver?3"
+	abp.pml:47, state 22, "-end-"
+	(5 of 22 states)
+
+pan: elapsed time 0.001 seconds
+No errors found -- did you verify all claims?
+
+

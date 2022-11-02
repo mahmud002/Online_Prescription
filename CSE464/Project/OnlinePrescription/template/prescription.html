@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% block title %} Home{% endblock title %} 
+{% block active%}active{% endblock active%}
+{% block style %}<style>
+  body {font-family: Arial, Helvetica, sans-serif;}
+  * {box-sizing: border-box;}
+  
+  /* Button used to open the contact form - fixed at the bottom of the page */
+  .open-button {
+    background-color: #555;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+    width: 280px;
+  }
+  
+  /* The popup form - hidden by default */
+  .form-popup {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+  }
+  
+  /* Add styles to the form container */
+  .form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
+  }
+  
+  /* Full-width input fields */
+  .form-container input[type=text], .form-container input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
+  
+  /* When the inputs get focus, do something */
+  .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+  
+  /* Set a style for the submit/login button */
+  .form-container .btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+  }
+  
+  /* Add a red background color to the cancel button */
+  .form-container .cancel {
+    background-color: red;
+  }
+  
+  /* Add some hover effects to buttons */
+  .form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+  }
+  </style>{% endblock style %}
+{% block body %}
+{% for temp in p %}
+<section class="vh-100" style="background-color: #f4f5f7;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-6 mb-4 mb-lg-0">
+          <div class="card mb-3" style="border-radius: .5rem;">
+            <div class="row g-0">
+
+              <div class="col-md-8">
+                <div class="card-body p-4">
+                  
+                  <h6>Patient Information</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Name</h6>
+                      <p class="text-muted">{{mydoc.Name}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Nid/Birth Certificate</h6>
+                      <p class="text-muted">{{nid}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Gender</h6>
+                      <p class="text-muted">{{mydoc.Gender}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Date of Birth</h6>
+                      <p class="text-muted">{{mydoc.dob}}</p>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-primary" onclick="openForm()">Update</button>
+                  <script>
+                    function openForm() {
+                      document.getElementById("myForm").style.display = "block";
+                    }
+                    
+                    function closeForm() {
+                      document.getElementById("myForm").style.display = "none";
+                    }
+                    </script>
+            <div class="form-popup" id="myForm">
+              <form action="update_p" method="POST" class="form-container">
+                {% csrf_token %}
+                <label for="email"><b>Name</b></label>
+                <input type="text" placeholder="Enter Name" value="{{mydoc.Name}}" name="Tname" required>
+                
+                <label for="email"><b>Gender</b></label>
+                <select name="gender" >
+                  <option value="{{mydoc.Gender}}">{{mydoc.Gender}}</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Others">Others</option>
+                  
+                  </select><br><br> 
+                <label>Date of Birth : </label>   
+        
+                <div class = "container">  
+                    <div class = "row">  
+                      <div class = "col-sm-12" align = "center">   
+                       <input type = "date" name = "date" value="{{mydoc.dob}}">  
+                      </div>  
+                        
+                    </div>  
+                  </div>    
+            
+                <button type="submit" class="btn" value="{{nid}}" name="update_p"> Update</button>
+                <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+              </form>
+            </div>
+                  <h6>Doctor Information</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Name</h6>
+                      <p class="text-muted">{{temp.doc.Name}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Designation</h6>
+                      <p class="text-muted">{{temp.doc.Designation}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Gender</h6>
+                      <p class="text-muted">{{temp.doc.Gender}}</p>
+                    </div>
+                  </div>
+                  
+                </div>
+                <ol class="list-group list-group-numbered">
+                  <h4>Medicine</div><hr>
+                  {%for m in temp.medicine %}
+                  <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                      <div class="fw-bold">{{m.MedName}}</div>
+                      {{m.Mdose}}
+                    </div>
+                    <span class="badge bg-primary rounded-pill">{{m.Mquantity}}</span>
+                  </li>
+                  {% endfor %}
+                  <br><br>
+  
+  
+                  <ol class="list-group list-group-numbered">
+                    <h4>Test</div><hr>
+                    {%for m in temp.test %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">{{m.TName}}</div>
+                        {{m.TCmm}}
+                      </div>
+      
+                    </li>
+                    {% endfor %}
+              </div>
+
+            </div>
+
+
+
+          </div>
+
+        </div>
+
+
+        
+      </div>
+    </div>
+    
+  </section>
+  {% endfor %}
+  {% endblock body %}

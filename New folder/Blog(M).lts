@@ -1,0 +1,18 @@
+User= (in_enter_blog_page -> out_load_blog_page -> in_create_new_blog ->( out_insert_blog -> in_new_blog-> out_reload_page-> User | in_load_login_page->User)).
+
+Blog_Page= (out_enter_blog_page -> in_load_blog_page -> out_create_new_blog -> in_check_user_authentication->(out_authenticate-> in_insert_blog -> out_new_blog->in_check_post_validation->out_post_valied->in_save_in_DB->out_data_saved-> in_reload_page->Blog_Page |out_not_authenticate->out_load_login_page->Blog_Page)).
+
+
+DB_server=( out_check_user_authentication->(in_authenticate->out_check_post_validation->in_post_valied->out_save_in_DB->in_data_saved->DB_server | in_not_authenticate->DB_server)) .
+
+
+
+
+
+||Blogging_System= (User || Blog_Page || DB_server)
+
+                 /{in_enter_blog_page/out_enter_blog_page,out_load_blog_page/in_load_blog_page, in_create_new_blog/out_create_new_blog, out_insert_blog/in_insert_blog,
+		 in_new_blog/out_new_blog, out_reload_page/in_reload_page, in_check_user_authentication/out_check_user_authentication, out_authenticate/in_authenticate,
+		  in_check_post_validation/out_check_post_validation, out_post_valied/in_post_valied, in_save_in_DB/out_save_in_DB, out_data_saved/in_data_saved, out_not_authenticate/in_not_authenticate,
+		in_load_login_page/out_load_login_page
+}.

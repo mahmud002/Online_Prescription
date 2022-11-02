@@ -1,0 +1,27 @@
+digraph p_User {
+size="8,10";
+  GT [shape=box,style=dotted,label="User"];
+  GT -> S1;
+	S1 -> S2  [color=black,style=bold,label="to_signup!signuph"];
+	S2 -> S3  [color=black,style=bold,label="to_signup!addinfo"];
+	S3 -> S4  [color=black,style=bold,label="to_user?ack"];
+	S4 -> S1  [color=black,style=bold,label="to_signup!smsg"];
+}
+digraph p_Signup {
+size="8,10";
+  GT [shape=box,style=dotted,label="Signup"];
+  GT -> S1;
+	S1 -> S2  [color=black,style=bold,label="to_signup?signuph"];
+	S2 -> S3  [color=black,style=bold,label="to_signup?addinfo"];
+	S3 -> S4  [color=black,style=bold,label="to_database!check"];
+	S4 -> S5  [color=black,style=bold,label="to_signup?added"];
+	S5 -> S6  [color=black,style=bold,label="to_user!ack"];
+	S6 -> S1  [color=black,style=bold,label="to_signup?smsg"];
+}
+digraph p_Database {
+size="8,10";
+  GT [shape=box,style=dotted,label="Database"];
+  GT -> S1;
+	S1 -> S2  [color=black,style=bold,label="to_database?check"];
+	S2 -> S1  [color=black,style=bold,label="to_signup!added"];
+}

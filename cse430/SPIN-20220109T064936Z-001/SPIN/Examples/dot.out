@@ -1,0 +1,7 @@
+digraph p_Profile {
+size="8,10";
+  GT [shape=box,style=dotted,label="Profile"];
+  GT -> S1;
+	S1 -> S2  [color=black,style=bold,label="to_profile?update"];
+	S2 -> S1  [color=black,style=bold,label="to_user!loadPage"];
+}

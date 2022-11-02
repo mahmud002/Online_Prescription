@@ -1,0 +1,284 @@
+{% extends 'base.html' %}
+{% block title %} Home{% endblock title %} 
+{% block style %}<style>
+  body {font-family: Arial, Helvetica, sans-serif;}
+  * {box-sizing: border-box;}
+  
+  /* Button used to open the contact form - fixed at the bottom of the page */
+  .open-button {
+    background-color: #555;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+    width: 280px;
+  }
+  
+  /* The popup form - hidden by default */
+  .form-popup {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+  }
+  
+  /* Add styles to the form container */
+  .form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
+  }
+  
+  /* Full-width input fields */
+  .form-container input[type=text], .form-container input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
+  
+  /* When the inputs get focus, do something */
+  .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+  
+  /* Set a style for the submit/login button */
+  .form-container .btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+  }
+  
+  /* Add a red background color to the cancel button */
+  .form-container .cancel {
+    background-color: red;
+  }
+  
+  /* Add some hover effects to buttons */
+  .form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+  }
+  </style>{% endblock style %}
+{% block active%}active{% endblock active%}
+{% block body %}
+
+<section class="vh-1000" style="background-color: #f4f5f7;">
+    <div class="container py-5 h-1000">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-6 mb-4 mb-lg-0">
+          <div class="card mb-3" style="border-radius: .5rem;">
+            <div class="row g-0">
+
+              <div class="col-md-8">
+                <div class="card-body p-4">
+               
+                  <h6>Patient Information</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Name</h6>
+                      <p class="text-muted">{{pdata.Name}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Nid/Birth Certificate</h6>
+                      <p class="text-muted">{{nid}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Gender</h6>
+                      <p class="text-muted">{{pdata.Gender}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Date of Birth</h6>
+                      <p class="text-muted">{{pdata.dob}}</p>
+                    </div>
+                  </div>
+            
+                  <h6>Doctor Information</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Recent</h6>
+                      <p class="text-muted">Lorem ipsum</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Most Viewed</h6>
+                      <p class="text-muted">Dolor sit amet</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button"onclick="openaddForm1()" class="btn btn-success">Add Medicine</button>&nbsp;&nbsp;&nbsp;
+          <button type="button"onclick="openaddForm2()" class="btn btn-success">Add Test</button>&nbsp;&nbsp;&nbsp;
+          {% for temp2 in mdata %}
+
+          <ol class="list-group list-group-numbered">
+            
+              Date: {{temp2.date.date}}
+       
+              <h2>Medicine</h2>
+              {{temp2.pre_id}}
+              {% for temp in temp2.medicine %}
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">{{temp.MedName}}</div>
+                {{temp.Mdose}}
+
+              </div>
+              <span class="badge bg-primary rounded-pill">{{temp.Mquantity}}</span>
+              <form action="delOneMed" method="POST" class="form-container">
+                {% csrf_token %}
+
+          
+                <input type="hidden" name="delname" value= "{{temp.MedName}}" >
+                <button type="submit" class="btn btn-danger" value="{{temp2.pre_id}}" name="delid2"> Delete</button>
+                
+              </form>
+            </li>
+           
+ 
+            {% endfor %}
+
+            <div class="form-popup" id="myaddForm1">
+              <form action="addOneMed" method="POST" class="form-container">
+                {% csrf_token %}
+                <label for="email"><b>Medicine Name</b></label>
+                <input type="text" placeholder="Enter Medicine Name" name="Mname" required>
+                <label for="email"><b>Dose</b></label>
+                <input type="text" placeholder="Enter Medicine Dose" name="Mdose" required>
+                <label for="email"><b>Quantity</b></label>
+                <input type="text" placeholder="Enter Medicine Quantity" name="Mquan" required>  
+            
+                <button type="submit" class="btn" value="{{temp2.pre_id}}" name="delid"> Add</button>
+                <button type="button" class="btn cancel" onclick="closeaddForm1()">Cancel</button>
+              </form>
+            </div>
+            <div class="form-popup" id="myaddForm2">
+              <form action="addOneTest" method="POST" class="form-container">
+                {% csrf_token %}
+                <label for="email"><b>Test Name</b></label>
+                <input type="text" placeholder="Enter Test Name" name="Tname" required>
+                <label for="email"><b>Comment</b></label>
+                <input type="text" placeholder="Enter Comment Dose" name="Tcmm" required>  
+            
+                <button type="submit" class="btn" value="{{temp2.pre_id}}" name="addtest"> Add</button>
+                <button type="button" class="btn cancel" onclick="closeaddForm2()">Cancel</button>
+              </form>
+            </div>
+
+            <h2>Tests</h2>
+            {% for temp in temp2.test %}
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">{{temp.TName}}</div>
+              {{temp.TCmm}}
+            </div>
+          <div class="form" id="testdelForm1">
+              <form action="delOneTest" method="POST" >
+                {% csrf_token %}
+            
+                <input type="hidden" name="delname" value= "{{temp.TName}}" >
+                <button type="submit" class="btn btn-danger" value="{{temp2.pre_id}}" name="delid2"> Delete Test</button>
+
+              </form>
+            </div>
+          </li>
+
+          {% endfor %}
+
+          
+
+          <button type="button"onclick="openForm3()" class="btn btn-danger">Delete Prescription</button>
+          <div class="form-popup" id="myForm3">
+            <form action="delPres" method="POST" class="form-container">
+              <h1>Confirm to Delete?</h1>
+              {% csrf_token %}
+          
+        
+          
+              <button type="submit" class="btn" value={{temp2.pre_id}} name="delid">Confirm</button>
+              <button type="button" class="btn cancel" onclick="closeForm3()">Cancel</button>
+            </form>
+          </div>
+          
+
+          
+
+
+            <br><br><h3>Previous<h6><hr>
+
+        {% endfor %}
+          </ol>
+        
+
+
+
+
+        </div>
+
+        
+      </div>
+    </div>
+    
+  </section>
+  <script>
+    function openForm3() {
+      document.getElementById("myForm3").style.display = "block";
+    }
+    
+    function closeForm3() {
+      document.getElementById("myForm3").style.display = "none";
+    }
+    </script>
+      <script>
+        function openaddForm1() {
+          document.getElementById("myaddForm1").style.display = "block";
+        }
+        
+        function closeaddForm1() {
+          document.getElementById("myaddForm1").style.display = "none";
+        }
+        </script>
+      <script>
+        function openaddForm2() {
+          document.getElementById("myaddForm2").style.display = "block";
+        }
+        
+        function closeaddForm2() {
+          document.getElementById("myaddForm2").style.display = "none";
+        }
+        </script>
+              <script>
+                function opendelForm1() {
+                  document.getElementById("mydelForm1").style.display = "block";
+                }
+                
+                function closedelForm1() {
+                  document.getElementById("mydelForm1").style.display = "none";
+                }
+                </script>
+                <script>
+                  function opendelTest() {
+                    document.getElementById("testdelForm1").style.display = "block";
+                  }
+                  
+                  function closedelTest() {
+                    document.getElementById("testdelForm1").style.display = "none";
+                  }
+                  </script>
+  {% endblock body %}
